@@ -5,3 +5,6 @@ body {
 h1 {
     font-size: 2rem;
 }
+th {
+    border: solid 1px red;
+}
