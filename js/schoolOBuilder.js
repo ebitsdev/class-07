@@ -1,7 +1,11 @@
 'use strict'
 let schools = []
 let hours = ['6am', '7am', '8am', '9am', '10am', '11am']
-let School = function(name, min, max, spellsPerStudent){
+// Reference the form and the table from the our school.html file
+let schoolTable = document.getElementById('school-table')
+let schoolForm = document.getElementById('school-form')
+let School = function(name, min, max, spellsPerStudent)
+{
     this.name = name
     this.min = min
     this.max = max
@@ -16,7 +20,7 @@ let codePartners = new School('CodePartner', 3, 8, 3)
 let hogwarts = new School('Hogwarts', 5, 9, 75)
 let einstein = new School('Einstein', 2, 12, 55)
 // Add the school object to the school array
-schools.push(codePartners, hogwarts, einstein)
+// schools.push(codePartners, hogwarts, einstein)
 
 console.log(schools)
 // Reference the document body
@@ -38,19 +42,44 @@ for (let i = 0; i < hours.length; i++){
     tblHeader.appendChild(tblHeaderCell)
     tblHeaderCell.innerText = hours[i]
 }
-// Create a new row to append to the table
-for (let j = 0; j < schools.length; j++){
-    let tblRow = document.createElement('tr')
-    tbl.appendChild(tblRow)
-    let tblHeaderCell = document.createElement('th')
-    tblRow.appendChild(tblHeaderCell)
-    tblHeaderCell.innerText = schools[j].name
-    for (let i = 0; i < hours.length; i++){
-        let tblTd = document.createElement('td')
-        tblRow.appendChild(tblTd)
-        tblTd.innerText = schools[j].spellsCastPerHour()
+
+//Create a new school prototype method
+School.prototype.renderNewSchool = function(){
+    // Create a new row to append to the table
+    for (let j = 0; j < schools.length; j++){
+        let tblRow = document.createElement('tr')
+        tbl.appendChild(tblRow)
+        let tblHeaderCell = document.createElement('th')
+        tblRow.appendChild(tblHeaderCell)
+        tblHeaderCell.innerText = schools[j].name
+        for (let i = 0; i < hours.length; i++){
+            let tblTd = document.createElement('td')
+            tblRow.appendChild(tblTd)
+            tblTd.innerText = schools[j].spellsCastPerHour()
+        }
     }
 }
+// Go through the schools array and generate new rows to add to our table
+for (let j = 0; j < schools.length; j++){
+    schools[j].renderNewSchool()
+}
+// Reference both the table and the form from our school.html file
+let schoolNameInput = schoolForm.nameOfSchool
+let schoolMinStudentInput = schoolForm.minStudents
+
+//Create an eventListener that will listen for the submit event on our form from the school.html file
+schoolForm.addEventListener('submit', function(event){
+    //Prevent the form submit button from default behavior, i.e send the form data immediately
+    event.preventDefault()
+    // Instantiate a new school object from our constructor School function
+    let newSchool = new School(schoolNameInput.value, parseInt
+    (schoolMinStudentInput.value), 15, 8)
+    //Add the new school object to our schools array created above
+    schools.push(newSchool)
+    //Use our new prototype method to build table rows to add our school.html
+    newSchool.renderNewSchool()
+})
+
 //We want to display school name in h2 tag
 let schoolNames = document.createElement('ul')
 for (let k = 0; k < schools.length; k++){
