@@ -14,7 +14,9 @@ School.prototype.spellsCastPerHour = function(){
 // Instantiate the school constructor function
 let codePartners = new School('CodePartner', 3, 8, 3)
 let hogwarts = new School('Hogwarts', 5, 9, 75)
-schools.push(codePartners, hogwarts)
+let einstein = new School('Einstein', 2, 12, 55)
+// Add the school object to the school array
+schools.push(codePartners, hogwarts, einstein)
 
 console.log(schools)
 // Reference the document body
@@ -49,3 +51,15 @@ for (let j = 0; j < schools.length; j++){
         tblTd.innerText = schools[j].spellsCastPerHour()
     }
 }
+//We want to display school name in h2 tag
+let schoolNames = document.createElement('ul')
+for (let k = 0; k < schools.length; k++){
+    // Create school name items (li)
+    let schoolName = document.createElement('li')
+    // We add the schoolName to the schoolNames (ul)
+    schoolNames.appendChild(schoolName)
+    // Add school name text to the schoolName li tags
+    schoolName.innerText = schools[k].name
+}
+// Append the schooNames ul tag to the document body
+docBody.appendChild(schoolNames)
